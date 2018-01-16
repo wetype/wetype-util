@@ -19,7 +19,7 @@ const imagemin = require('gulp-imagemin')
 const plumber = require('gulp-plumber')
 const prettier = require('prettier')
 
-export default (gulp, pkgJsons) => {
+export const gulpfile = (gulp, pkgJsons) => {
     gulp.task('ts', () => {
         return tsProject
             .src()
