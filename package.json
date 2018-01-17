@@ -1,6 +1,9 @@
 {
     "name": "wetype-gulpfile",
     "version": "0.0.1",
+    "bin": {
+        "wetype": "bin/index.js"
+    },
     "scripts": {
         "start": "tsc -w",
         "rm": "rm -rf node_modules"
