@@ -1,48 +1,59 @@
-import fs = require('fs')
+// import fs = require('fs')
+import fs = require('fs-extra')
+import Path = require('path')
 
-let [type, name] = process.argv.slice(-2)
-
-let nameCamel = name.replace(/(\w)/, (m, $) => $.toUpperCase())
-let pugTpl = `
-include ../../pug/weui-mixins
+export function newPage(name: string, path: string, type: string) {
+    let nameCamel = name.replace(/(\w)/, (m, $) => $.toUpperCase())
+    let pugTpl = `
+    include ../../pug/weui-mixins
+        
+    `
+    let lessTpl = ``
+    let pageTsTpl = `
+    import { Page, wx, wt, types } from 'wetype-simple'
     
-`
-let lessTpl = ``
-let pageTsTpl = `
-import { Page, wx, wt, types } from 'wetype-simple'
-
-@Page.decor({
-    config: {
-        navigationBarTitleText: ''
+    @Page.decor({
+        config: {
+            navigationBarTitleText: ''
+        }
+    })
+    class ${nameCamel} extends Page {
+    
+        onLoad(options: types.OnloadOptions) {
+    
+        }
+    
     }
-})
-class ${nameCamel} extends Page {
+    `
+    let componentTsTpl = `
+    import { Component, wx, wt, types } from 'wetype-simple'
+    
+    @Component.decor({
+        config: {}
+    })
+    class ${nameCamel} extends Component {
+    
+    
+    
+    }
+    
+    `
 
-    onLoad(options: types.OnloadOptions) {
+    let tsTpl = type === 'pages' ? pageTsTpl : componentTsTpl
 
+    let fileName = type === 'pages' ? name : name + '.com'
+
+    let write = (path: string, fileName: string, ext: string, tpl) => {
+        let realPath = Path.join(path, fileName, fileName + ext)
+        fs.writeFileSync(realPath, tpl, 'utf-8')
     }
 
+    let realPath = Path.join(path, fileName)
+
+    fs.ensureDir(realPath, err => {
+        write(path, fileName, '.ts', tsTpl)
+        write(path, fileName, '.pug', pugTpl)
+        write(path, fileName, '.less', lessTpl)
+        console.log('已创建', Path.join(realPath))
+    })
 }
-`
-let componentTsTpl = `
-import { Component, wx, wt, types } from 'wetype-simple'
-
-@Component.decor({
-    config: {}
-})
-class ${nameCamel} extends Component {
-
-
-
-}
-
-`
-
-let tsTpl = type === 'page' ? pageTsTpl : componentTsTpl
-
-let fileName = type === 'page' ? name : name + '.com'
-
-fs.mkdirSync(`src/${type}s/${name}`)
-fs.writeFileSync(`src/${type}s/${name}/${fileName}.ts`, tsTpl, `utf-8`)
-fs.writeFileSync(`src/${type}s/${name}/${fileName}.pug`, pugTpl, `utf-8`)
-fs.writeFileSync(`src/${type}s/${name}/${fileName}.less`, lessTpl, `utf-8`)

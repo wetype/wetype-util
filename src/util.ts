@@ -8,3 +8,5 @@ export const exec = comm => {
         })
     })
 }
+
+export const log = console.log
