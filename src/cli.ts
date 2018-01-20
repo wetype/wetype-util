@@ -1,5 +1,6 @@
 import commander = require('commander')
 import child_precess = require('child_process')
+import { exec } from './util'
 import { TEMPLATE_GIT_REPO } from './constants'
 
 export const cli = () => {
@@ -8,21 +9,22 @@ export const cli = () => {
         .command('init <projectnaName>')
         .action(projectnaName => {
             console.log('开始下载WeType开发脚手架，请稍等')
-            child_precess.exec(
-                `git clone ${TEMPLATE_GIT_REPO} -o origin -b dev ${projectnaName}`,
-                err => {
-                    if (err) {
-                        console.log('下载错误')
-                    } else {
-                        console.log(
-                            '------------\n恭喜您！克隆成功\n------------\n 请进入项目安装npm包！'
-                        )
-                    }
-                }
+            exec(
+                `git clone ${TEMPLATE_GIT_REPO} -o origin -b template ${projectnaName}`
             )
+                .then(() => {
+                    console.log(
+                        '------------\n恭喜您！克隆成功\n------------\n 请进入项目安装npm包！'
+                    )
+                })
+                .catch(err => {
+                    console.log('下载错误')
+                })
         })
 
-    commander.command('')
+    commander.command('update').action(() => {
+        console.log('good')
+    })
 
     commander.parse(process.argv)
 }
