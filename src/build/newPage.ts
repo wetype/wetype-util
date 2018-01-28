@@ -10,9 +10,7 @@ export function newPage(name: string, path: string, type: string) {
     import { Page, wx, wt, types } from 'wetype'
     
     @Page.decor({
-        config: {
-            navigationBarTitleText: ''
-        }
+        config: {}
     })
     class ${nameCamel} extends Page {
     
