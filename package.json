@@ -6,6 +6,8 @@
     },
     "scripts": {
         "start": "tsc -w",
+        "build": "npm run start",
+        "new": "wetype new",
         "rm": "rm -rf node_modules"
     },
     "main": "dist/index.js",

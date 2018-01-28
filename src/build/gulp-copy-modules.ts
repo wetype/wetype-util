@@ -12,7 +12,7 @@ export function copyModules() {
         let { main, name } = JSON.parse(pkgJson)
         // 入口文件的绝对路径
         let mainPath = Path.resolve(path, '../' + main)
-        if (name === 'wetype-simple') {
+        if (name === 'wetype') {
             mainPath = Path.resolve(path, '../dist/wetype.js')
         }
         fs.readFile(mainPath, 'utf-8', (err, data) => {

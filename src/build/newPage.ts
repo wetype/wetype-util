@@ -4,13 +4,10 @@ import Path = require('path')
 
 export function newPage(name: string, path: string, type: string) {
     let nameCamel = name.replace(/(\w)/, (m, $) => $.toUpperCase())
-    let pugTpl = `
-    include ../../pug/weui-mixins
-        
-    `
+    let pugTpl = ``
     let lessTpl = ``
     let pageTsTpl = `
-    import { Page, wx, wt, types } from 'wetype-simple'
+    import { Page, wx, wt, types } from 'wetype'
     
     @Page.decor({
         config: {
@@ -26,7 +23,7 @@ export function newPage(name: string, path: string, type: string) {
     }
     `
     let componentTsTpl = `
-    import { Component, wx, wt, types } from 'wetype-simple'
+    import { Component, wx, wt, types } from 'wetype'
     
     @Component.decor({
         config: {}
