@@ -10,7 +10,6 @@ const tsProject = ts.createProject('tsconfig.json')
 const pug = require('gulp-pug')
 const rename = require('gulp-rename')
 const clean = require('gulp-clean')
-const less = require('gulp-less')
 const flatten = require('gulp-flatten')
 const uglify = require('gulp-uglify')
 const cache = require('gulp-cached')
@@ -18,6 +17,7 @@ const fs = require('fs')
 const imagemin = require('gulp-imagemin')
 const plumber = require('gulp-plumber')
 const prettier = require('prettier')
+const sass = require('gulp-sass')
 
 export const gulpfile = (gulp, pkgJsons) => {
     gulp.task('ts', () => {
@@ -46,17 +46,32 @@ export const gulpfile = (gulp, pkgJsons) => {
             .pipe(gulp.dest('dist'))
     })
 
-    gulp.task('less', cb => {
+    // gulp.task('less', cb => {
+    //     console.log('123345')
+    //     return (
+    //         gulp
+    //             .src('src/**/*.less')
+    //             // .pipe(plumber())
+    //             .pipe(less())
+    //         // .pipe(
+    //         //     rename({
+    //         //         extname: '.wxss'
+    //         //     })
+    //         // )
+    //         // .pipe(modifyWxss())
+    //     )
+    //     // .pipe(gulp.dest('dist'))
+    // })
+
+    gulp.task('sass', cb => {
         return gulp
-            .src('src/**/*.less')
-            .pipe(plumber())
-            .pipe(less())
+            .src('src/**/*.scss')
+            .pipe(sass())
             .pipe(
                 rename({
                     extname: '.wxss'
                 })
             )
-            .pipe(modifyWxss())
             .pipe(gulp.dest('dist'))
     })
 
@@ -90,10 +105,12 @@ export const gulpfile = (gulp, pkgJsons) => {
             .pipe(gulp.dest('dist'))
     })
 
+    // gulp.task('rmExtraCss', () => {})
+
     gulp.task('w', () => {
         const tsWatcher = gulp.watch('src/**/*.ts', ['ts'])
         const pugWatcher = gulp.watch('src/**/*.pug', ['pug'])
-        const lessWatcher = gulp.watch('src/**/*.less', ['less'])
+        const sassWatcher = gulp.watch('src/**/*.scss', ['sass'])
         const imgWatcher = gulp.watch('src/img/*', ['img'])
 
         tsWatcher.on('change', e => {
@@ -103,5 +120,5 @@ export const gulpfile = (gulp, pkgJsons) => {
         })
     })
 
-    gulp.task('default', ['ts', 'pug', 'less', 'copy', 'img', 'w'])
+    gulp.task('default', ['ts', 'pug', 'sass', 'copy', 'img', 'w'])
 }
