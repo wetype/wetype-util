@@ -66,12 +66,10 @@ export const gulpfile = (gulp, pkgJsons) => {
     gulp.task('sass', cb => {
         return gulp
             .src('src/**/*.scss')
+            .pipe(plumber())
             .pipe(sass())
-            .pipe(
-                rename({
-                    extname: '.wxss'
-                })
-            )
+            .pipe(rename({ extname: '.wxss' }))
+            .pipe(modifyWxss())
             .pipe(gulp.dest('dist'))
     })
 
