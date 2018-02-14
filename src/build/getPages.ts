@@ -4,7 +4,7 @@ const filteredTree = dirTree('src/pages', { extensions: /\.ts/ })
 const Path = require('path')
 const { correctSep } = require('./util')
 
-module.exports = function getPages(mainPage, excludePages) {
+export function getPages(mainPage, excludePages) {
     let result: string[] = []
     function recursive(tree) {
         tree.children.forEach((el, i) => {

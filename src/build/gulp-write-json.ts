@@ -1,9 +1,9 @@
 import through = require('through2')
 import * as util from './util'
+import { getPages } from './getPages'
 const fs = require('fs-extra')
 const Path = require('path')
 const _ = require('lodash')
-const getPages = require('./getPages')
 
 declare var json: any
 

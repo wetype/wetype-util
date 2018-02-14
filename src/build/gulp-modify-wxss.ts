@@ -1,8 +1,8 @@
 import through = require('through2')
+import * as util from './util'
 const Path = require('path')
 const mineType = require('mime-types')
 const fs = require('fs')
-const util = require('./util')
 
 export function modifyWxss() {
     return through.obj((file, enc, cb) => {
