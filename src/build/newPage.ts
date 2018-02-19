@@ -5,20 +5,20 @@ import Path = require('path')
 export function newPage(name: string, path: string, type: string) {
     let nameCamel = name.replace(/(\w)/, (m, $) => $.toUpperCase())
     let pugTpl = ``
-    let lessTpl = ``
+    let scssTpl = ``
     let pageTsTpl = `
-    import { Page, wx, wt, types } from 'wetype'
-    
-    @Page.decor({
-        config: {}
-    })
-    class ${nameCamel} extends Page {
-    
-        onLoad(options: types.OnloadOptions) {
-    
-        }
-    
+import { Page, wx, wt, types } from 'wetype'
+
+@Page.decor({
+    config: {}
+})
+class ${nameCamel} extends Page {
+
+    onLoad(options: types.OnloadOptions) {
+
     }
+
+}
     `
     let componentTsTpl = `
     import { Component, wx, wt, types } from 'wetype'
@@ -48,7 +48,7 @@ export function newPage(name: string, path: string, type: string) {
     fs.ensureDir(realPath, err => {
         write(path, fileName, '.ts', tsTpl)
         write(path, fileName, '.pug', pugTpl)
-        write(path, fileName, '.less', lessTpl)
+        write(path, fileName, '.scss', scssTpl)
         console.log('已创建', Path.join(realPath))
     })
 }
