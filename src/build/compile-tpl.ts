@@ -3,7 +3,7 @@
  *
  */
 import { alphabet } from './util'
-import _ = require('lodash')
+const _ = require('lodash')
 const Entities = require('html-entities').XmlEntities
 const entities = new Entities()
 
@@ -130,7 +130,7 @@ export class TplCompiler {
     handleClass(str) {
         // 先去掉左右的大括号
         str = str.replace(/\{|\}/g, '')
-        let reg = /([\w\-'"_]+)\:\s?([\s\w\+\-\*\/\&\|_\.\!\=]+)\,?/g
+        let reg = /([\w\-'"_]+)\:\s?([\s\w\+\-\*\/\&\|_\.\!\=\']+)\,?/g
         return str.replace(
             reg,
             (match, className, expression) =>

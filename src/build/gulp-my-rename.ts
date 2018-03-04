@@ -1,5 +1,5 @@
 import through from 'through2'
-import Path from 'path'
+const Path = require('path')
 
 export default function(options) {
     return through.obj((file, enc, cb) => {
