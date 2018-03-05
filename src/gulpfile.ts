@@ -91,7 +91,7 @@ export const gulpfile = (gulp, pkgJsons) => {
 
     gulp.task('img', () => {
         gulp
-            .src('src/img/*')
+            .src(['src/img/**/*', '!src/img/**/icon-*'])
             .pipe(imagemin())
             .pipe(gulp.dest('dist/img'))
     })
