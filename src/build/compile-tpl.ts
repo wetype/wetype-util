@@ -130,7 +130,7 @@ export class TplCompiler {
     handleClass(str) {
         // 先去掉左右的大括号
         str = str.replace(/\{|\}/g, '')
-        let reg = /([\w\-'"_]+)\:\s?([\s\w\+\-\*\/\&\|_\.\!\=\']+)\,?/g
+        let reg = /([\w\-'"_]+)\:\s?([\s\w\+\-\*\/\&\|_\.\!\=\'\(\)]+)\,?/g
         return str.replace(
             reg,
             (match, className, expression) =>
@@ -148,7 +148,7 @@ export class TplCompiler {
             }
         }
 
-        let matched = str.match(/([\w\s\,\(\)]+)\sin\s(\w+)/)
+        let matched = str.match(/([\w\s\,\(\)]+)\sin\s([\w\.]+)/)
         if (matched) {
             if (/\,/.test(matched[1])) {
                 let arr = matched[1]
