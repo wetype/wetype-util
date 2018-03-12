@@ -9,7 +9,6 @@ const ts = require('gulp-typescript')
 const tsProject = ts.createProject('tsconfig.json')
 const pug = require('gulp-pug')
 const rename = require('gulp-rename')
-const clean = require('gulp-clean')
 const flatten = require('gulp-flatten')
 const uglify = require('gulp-uglify')
 const cache = require('gulp-cached')
@@ -46,23 +45,6 @@ export const gulpfile = (gulp, pkgJsons) => {
             .pipe(gulp.dest('dist'))
     })
 
-    // gulp.task('less', cb => {
-    //     console.log('123345')
-    //     return (
-    //         gulp
-    //             .src('src/**/*.less')
-    //             // .pipe(plumber())
-    //             .pipe(less())
-    //         // .pipe(
-    //         //     rename({
-    //         //         extname: '.wxss'
-    //         //     })
-    //         // )
-    //         // .pipe(modifyWxss())
-    //     )
-    //     // .pipe(gulp.dest('dist'))
-    // })
-
     gulp.task('sass', cb => {
         return gulp
             .src('src/**/*.scss')
@@ -71,14 +53,6 @@ export const gulpfile = (gulp, pkgJsons) => {
             .pipe(rename({ extname: '.wxss' }))
             .pipe(modifyWxss())
             .pipe(gulp.dest('dist'))
-    })
-
-    gulp.task('clean', () => {
-        return gulp
-            .src('dist', {
-                read: false
-            })
-            .pipe(clean())
     })
 
     gulp.task('copy', () => {
