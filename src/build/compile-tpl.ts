@@ -39,11 +39,12 @@ export class TplCompiler {
                 let _show = pairs[':show']
                 let _hide = pairs[':hide']
                 let _style = pairs[':style']
+                let _modal = pairs[':modal']
                 let _events = attrs.filter(el => el[0] === '@' || el[0] === '#')
                 let _others = attrs.filter(
                     el =>
                         el[0] === ':' &&
-                        !/class|for|show|hide|style|if/.test(el)
+                        !/class|for|show|hide|style|if|modal/.test(el)
                 )
                 // console.log(attrs)
                 if (_class) {
@@ -76,6 +77,23 @@ export class TplCompiler {
                 } else if (!_show && _hide) {
                     pairs['hidden'] = `{{${_hide}}}`
                     delete pairs[':hide']
+                } else if (_modal) {
+                    const bindchange = [
+                        'checkbox',
+                        'picker',
+                        'picker-view',
+                        'radio',
+                        'switch',
+                        'slider'
+                    ]
+                    const bindinput = ['input', 'textarea']
+                    if (bindchange.indexOf(tagName) > -1) {
+                        pairs['bindchange'] = `${_modal}Input`
+                    } else if (bindinput.indexOf(tagName) > -1) {
+                        pairs['bindinput'] = `${_modal}Input`
+                    }
+                    pairs['value'] = `{{${_modal}}}`
+                    delete pairs[':modal']
                 }
 
                 _events.forEach(key => {
