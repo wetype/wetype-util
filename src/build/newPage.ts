@@ -14,23 +14,23 @@ import { Page, wx, wt, types } from 'wetype'
 })
 class ${nameCamel} extends Page {
 
-    onLoad(options: types.OnloadOptions) {
+    onLoad() {
 
     }
 
 }
     `
     let componentTsTpl = `
-    import { Component, wx, wt, types } from 'wetype'
-    
-    @Component.decor({
-        config: {}
-    })
-    class ${nameCamel} extends Component {
-    
-    
-    
-    }
+import { Component, wx, wt, types } from 'wetype'
+
+@Component.decor({
+    config: {}
+})
+class ${nameCamel} extends Component {
+
+
+
+}
     
     `
 
