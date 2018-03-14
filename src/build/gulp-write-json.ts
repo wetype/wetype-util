@@ -35,7 +35,10 @@ export function writeJson() {
             } else if (isPage) {
                 Object.keys(config.usingComponents || {}).forEach(name => {
                     let v = config.usingComponents[name]
-                    config.usingComponents[name] = `./${v}.com`
+                    let componentDirName = _.last(v.split('/'))
+                    config.usingComponents[
+                        name
+                    ] = `/components/${v}/${componentDirName}`
                 })
             }
             let relativePath = Path.relative(process.cwd(), path) + 'on'
