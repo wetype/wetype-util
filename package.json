@@ -5,7 +5,7 @@
         "wetype": "bin/index.js"
     },
     "scripts": {
-        "start": "tsc -w",
+        "start": "tsc",
         "build": "npm run start",
         "new": "wetype new",
         "rm": "rm -rf node_modules"

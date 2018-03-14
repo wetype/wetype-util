@@ -73,7 +73,7 @@ export const gulpfile = (gulp, pkgJsons) => {
             .pipe(gulp.dest('dist/img'))
     })
 
-    gulp.task('uglify', () => {
+    gulp.task('uglify', ['ts'], () => {
         gulp
             .src('dist/**/*.js')
             .pipe(uglify())
@@ -96,4 +96,6 @@ export const gulpfile = (gulp, pkgJsons) => {
     })
 
     gulp.task('default', ['ts', 'pug', 'sass', 'copy', 'img', 'w'])
+
+    gulp.task('build', ['uglify', 'pug', 'sass', 'copyProd', 'img', 'w'])
 }
