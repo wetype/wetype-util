@@ -17,6 +17,7 @@ const imagemin = require('gulp-imagemin')
 const plumber = require('gulp-plumber')
 const prettier = require('prettier')
 const sass = require('gulp-sass')
+const uglifycss = require('gulp-uglifycss')
 
 export const gulpfile = (gulp, pkgJsons) => {
     gulp.task('ts', () => {
@@ -73,14 +74,19 @@ export const gulpfile = (gulp, pkgJsons) => {
             .pipe(gulp.dest('dist/img'))
     })
 
-    gulp.task('uglify', ['ts'], () => {
+    gulp.task('uglify', ['ts', 'copy'], () => {
         gulp
             .src('dist/**/*.js')
             .pipe(uglify())
             .pipe(gulp.dest('dist'))
     })
 
-    // gulp.task('rmExtraCss', () => {})
+    gulp.task('uglifycss', ['sass'], () => {
+        gulp
+            .src('dist/**/*.wxss')
+            .pipe(uglifycss())
+            .pipe(gulp.dest('dist'))
+    })
 
     gulp.task('w', () => {
         const tsWatcher = gulp.watch('src/**/*.ts', ['ts'])
@@ -97,5 +103,5 @@ export const gulpfile = (gulp, pkgJsons) => {
 
     gulp.task('default', ['ts', 'pug', 'sass', 'copy', 'img', 'w'])
 
-    gulp.task('build', ['uglify', 'pug', 'sass', 'copyProd', 'img', 'w'])
+    gulp.task('build', ['uglify', 'pug', 'uglifycss', 'img', 'w'])
 }
