@@ -36,6 +36,7 @@ export class TplCompiler {
                 let _class = pairs[':class']
                 let _for = pairs[':for']
                 let _if = pairs[':if']
+                let _else = pairs[':else']
                 let _show = pairs[':show']
                 let _hide = pairs[':hide']
                 let _style = pairs[':style']
@@ -65,6 +66,11 @@ export class TplCompiler {
                 if (_if) {
                     pairs['wx:if'] = `{{${_if}}}`
                     delete pairs[':if']
+                }
+
+                if (_else) {
+                    pairs['wx:else'] = ''
+                    delete pairs[':else']
                 }
 
                 if (_show && !_hide) {
