@@ -45,7 +45,7 @@ export class TplCompiler {
                 let _others = attrs.filter(
                     el =>
                         el[0] === ':' &&
-                        !/class|for|show|hide|style|if|modal/.test(el)
+                        !/class|for|show|hide|style|if|modal|else/.test(el)
                 )
                 // console.log(attrs)
                 if (_class) {
