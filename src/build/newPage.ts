@@ -36,7 +36,7 @@ class ${nameCamel} extends Component {
 
     let tsTpl = type === 'pages' ? pageTsTpl : componentTsTpl
 
-    let fileName = type === 'pages' ? name : name + '.com'
+    let fileName = type === 'pages' ? name : name
 
     let write = (path: string, fileName: string, ext: string, tpl) => {
         let realPath = Path.join(path, fileName, fileName + ext)
