@@ -6,7 +6,7 @@ import { newPage } from './build/newPage'
 import Path = require('path')
 
 const CWD = process.cwd()
-const wetypeConfig = require(Path.join(CWD, 'package.json')).wetype
+const wetypeConfig = () => require(Path.join(CWD, 'package.json')).wetype
 
 commander
     .version('0.0.1')
@@ -27,7 +27,7 @@ commander
     })
 
 commander.command('update').action(() => {
-    log(wetypeConfig)
+    log(wetypeConfig())
 })
 
 commander
@@ -36,16 +36,17 @@ commander
     .option('-p, --path <path>', '子路径')
     .action((pageName: string, options) => {
         let { path, type } = options
-        if (wetypeConfig) {
+        let config = wetypeConfig()
+        if (config) {
             type = type === 'com' ? 'components' : 'pages'
-            let srcPath = Path.join(CWD, wetypeConfig.srcDir || 'src')
+            let srcPath = Path.join(CWD, config.srcDir || 'src')
             let absPath = Path.join(srcPath, type, path || '')
             newPage(pageName, absPath, type)
         }
     })
 
 commander.command('build').action(() => {
-    if (wetypeConfig) {
+    if (wetypeConfig()) {
         exec('npm start')
     }
 })
