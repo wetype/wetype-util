@@ -84,6 +84,7 @@ export class TplCompiler {
                     pairs['hidden'] = `{{${_hide}}}`
                     delete pairs[':hide']
                 } else if (_model) {
+                    let modelArr = _model.split('$')
                     const bindchange = [
                         'checkbox',
                         'picker',
@@ -93,12 +94,18 @@ export class TplCompiler {
                         'slider'
                     ]
                     const bindinput = ['input', 'textarea']
-                    if (bindchange.indexOf(tagName) > -1) {
-                        pairs['bindchange'] = `${_model}Input`
-                    } else if (bindinput.indexOf(tagName) > -1) {
-                        pairs['bindinput'] = `${_model}Input`
+                    if (_.includes(bindchange, tagName)) {
+                        pairs['bindchange'] = `${modelArr[0]}Input`
+                    } else {
+                        pairs['bindinput'] = `${modelArr[0]}Input`
                     }
-                    pairs['value'] = `{{${_model}}}`
+                    let value =
+                        modelArr[0] + (modelArr[1] ? '$' + modelArr[1] : '')
+                    if (tagName === 'switch') {
+                        pairs['checked'] = `{{${value}}}`
+                    } else {
+                        pairs['value'] = `{{${value}}}`
+                    }
                     delete pairs[':model']
                 }
 
