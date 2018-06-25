@@ -88,11 +88,23 @@ export const gulpfile = (gulp, pkgJsons) => {
             .pipe(gulp.dest('dist'))
     })
 
+    gulp.task('copyWxs', () => {
+        gulp
+            .src('src/wxs/**/*.js')
+            .pipe(
+                rename({
+                    extname: '.wxs'
+                })
+            )
+            .pipe(gulp.dest('dist/wxs'))
+    })
+
     gulp.task('w', () => {
         const tsWatcher = gulp.watch('src/**/*.ts', ['ts'])
         const pugWatcher = gulp.watch('src/**/*.pug', ['pug'])
         const sassWatcher = gulp.watch('src/**/*.scss', ['sass'])
         const imgWatcher = gulp.watch('src/img/*', ['img'])
+        const wxsWatcher = gulp.watch('src/wxs/**/*.js', ['copyWxs'])
 
         tsWatcher.on('change', e => {
             console.log(
@@ -101,7 +113,7 @@ export const gulpfile = (gulp, pkgJsons) => {
         })
     })
 
-    gulp.task('default', ['ts', 'pug', 'sass', 'copy', 'img', 'w'])
+    gulp.task('default', ['ts', 'pug', 'sass', 'copy', 'img', 'copyWxs', 'w'])
 
-    gulp.task('build', ['uglify', 'pug', 'uglifycss', 'img', 'w'])
+    gulp.task('build', ['uglify', 'pug', 'uglifycss', 'img', 'copyWxs', 'w'])
 }
