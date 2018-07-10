@@ -77,7 +77,7 @@ export const gulpfile = (gulp, pkgJsons) => {
     gulp.task('uglify', ['ts', 'copy'], () => {
         gulp
             .src('dist/**/*.js')
-            .pipe(uglify())
+            .pipe(uglify({ mangle: false }))
             .pipe(gulp.dest('dist'))
     })
 

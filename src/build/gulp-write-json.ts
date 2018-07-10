@@ -23,16 +23,7 @@ export function writeJson() {
             let m = rmBehaviorArr(matched[1])
             let json: any = new Function(`return { ${m} } `)()
             let config = json.config || {}
-            // 若是组件，则自动添加组件配置
-            if (isComponent) {
-                config = {
-                    component: true
-                }
-            } else if (isApp) {
-                config.pages = getPages(config.mainPage, config.excludePages)
-                delete config.mainPage
-                delete config.excludePages
-            } else if (isPage) {
+            let usingComponents = config =>
                 Object.keys(config.usingComponents || {}).forEach(name => {
                     let v = config.usingComponents[name]
                     let componentDirName = _.last(v.split('/'))
@@ -40,6 +31,16 @@ export function writeJson() {
                         name
                     ] = `/components/${v}/${componentDirName}`
                 })
+            // 若是组件，则自动添加组件配置
+            if (isComponent) {
+                config.component = true
+                usingComponents(config)
+            } else if (isApp) {
+                config.pages = getPages(config.mainPage, config.excludePages)
+                delete config.mainPage
+                delete config.excludePages
+            } else if (isPage) {
+                usingComponents(config)
             }
             let relativePath = Path.relative(process.cwd(), path) + 'on'
             let dir = Path.dirname(relativePath)
